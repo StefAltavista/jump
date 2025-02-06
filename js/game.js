@@ -9,6 +9,7 @@ const score = new Score(document.getElementById("score"));
 const gameField = document.getElementById("gameField");
 const muteButton = document.getElementById("soundMute");
 const sounds = new Sounds(muteButton);
+const mute = true;
 
 muteButton.addEventListener("click", () => {
   sounds.toggleMute();
@@ -18,7 +19,7 @@ muteButton.addEventListener("click", () => {
 
 document.addEventListener("keydown", (event) => {
   if (event.code === "Space") {
-    player.jump(() => sounds.play("jump"));
+    mute ? player.jump(() => sounds.play("jump")) : player.jump(() => {});
   }
 });
 
@@ -34,7 +35,7 @@ const startGame = function () {
   let newObstacle = true;
   let boss = false;
   let wobbleSpeed = 1;
-  sounds.play("start");
+  if (!mute) sounds.play("start");
 
   const animation = function (timestamp) {
     if (!startTime) startTime = timestamp;
@@ -73,7 +74,7 @@ const startGame = function () {
 
     if (checkCollision(player, obstacles)) {
       obstacles.forEach((x) => x.stop());
-      sounds.play("lost");
+      if (!mute) sounds.play("lost");
 
       // minus one life or Game over /// sounds.play("gameover")
 
