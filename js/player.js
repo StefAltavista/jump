@@ -5,10 +5,11 @@ export class Player {
     this.isStopping = false;
   }
 
-  jump() {
+  jump(jump) {
     if (!this.isJumping) {
       this.isJumping = true;
       this.element.classList.add("jump");
+      jump();
 
       setTimeout(() => {
         if (!this.isStopping) {

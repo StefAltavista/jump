@@ -2,16 +2,18 @@ import { Player } from "./player.js";
 import { createObstacle, createBoss } from "./obstacle.js";
 import { checkCollision } from "./collision.js";
 import { Score } from "./score.js";
+import { Sounds } from "./sounds.js";
 
 const player = new Player(document.getElementById("player"));
 const score = new Score(document.getElementById("score"));
 const gameField = document.getElementById("gameField");
+const sounds = new Sounds();
 
 // const lifes
 
 document.addEventListener("keydown", (event) => {
   if (event.code === "Space") {
-    player.jump();
+    player.jump(() => sounds.play("jump"));
   }
 });
 
@@ -26,7 +28,8 @@ const startGame = function () {
   let maxSpawnRate = 5;
   let newObstacle = true;
   let boss = false;
-  let wobbleSpeed = 0;
+  let wobbleSpeed = 1;
+  sounds.play("start");
 
   const animation = function (timestamp) {
     if (!startTime) startTime = timestamp;
@@ -47,6 +50,7 @@ const startGame = function () {
         obstacles[obstacleNum].move(speed * 3);
         obstacleNum++;
         boss = true;
+        sounds.play("boss");
         minSpawnRate = 5;
         setInterval(() => {
           boss = false;
@@ -64,8 +68,9 @@ const startGame = function () {
 
     if (checkCollision(player, obstacles)) {
       obstacles.forEach((x) => x.stop());
+      sounds.play("lost");
 
-      // minus one life or Game over
+      // minus one life or Game over /// sounds.play("gameover")
 
       player.stop();
       cancelAnimationFrame(animationID);
