@@ -7,7 +7,12 @@ import { Sounds } from "./sounds.js";
 const player = new Player(document.getElementById("player"));
 const score = new Score(document.getElementById("score"));
 const gameField = document.getElementById("gameField");
-const sounds = new Sounds();
+const muteButton = document.getElementById("soundMute");
+const sounds = new Sounds(muteButton);
+
+muteButton.addEventListener("click", () => {
+  sounds.toggleMute();
+});
 
 // const lifes
 
