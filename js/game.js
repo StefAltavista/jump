@@ -3,12 +3,18 @@ import { createObstacle, createBoss } from "./obstacle.js";
 import { checkCollision } from "./collision.js";
 import { Score } from "./score.js";
 import { Sounds } from "./sounds.js";
+import { Modal } from "./modals.js";
+
+const gameField = document.getElementById("gameField");
+const muteButton = document.getElementById("soundMute");
 
 const player = new Player(document.getElementById("player"));
 const score = new Score(document.getElementById("score"));
-const gameField = document.getElementById("gameField");
-const muteButton = document.getElementById("soundMute");
 const sounds = new Sounds(muteButton);
+const modal = new Modal();
+
+
+
 let mute = true;
 
 muteButton.addEventListener("click", () => {
@@ -93,4 +99,5 @@ const startGame = function () {
   animationID = requestAnimationFrame(animation);
 };
 
+// if gameOver modal.renderModal(modal.createModalGameOver);
 startGame();
