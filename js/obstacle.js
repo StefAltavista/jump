@@ -20,7 +20,7 @@ class Obstacle {
     let mainColor = `rgb(${r}, ${g}, ${b})`;
     let shadowColor = `rgb(${r - 50}, ${g - 50}, ${b - 50})`;
     this.element.style.background = mainColor;
-    this.element.style.boxShadow = `inset 5px 5px 10px ${shadowColor}`;
+    this.element.style.boxShadow = ` 0px 0px 20px 15px ${mainColor}`;
   }
   move(speed) {
     this.element.style.animation = `obstacleMove ${speed}ms linear`;

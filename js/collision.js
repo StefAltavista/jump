@@ -1,4 +1,4 @@
-let buffer = 5;
+let buffer = 0;
 export function checkCollision(player, obstacles) {
   let playerRect = player.element.getBoundingClientRect();
   for (let obstacle of obstacles) {
