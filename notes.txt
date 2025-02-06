@@ -1,0 +1,53 @@
+
+TODO
+
+ELIF
+
+Start Modal (only HTML inside container class="modal)
+create the game function:
+        hello message with start game button
+        click start 
+        close start modal
+        open countdown modal 
+        3 ....2.....1...go! ->  call start() / close countdown modal
+
+multiple lives - 3x red heart
+score summs for each life
+ 
+maybe {at game over type your name and save (lets see if to do)}
+
+
+Anastasiia
+Double jump:
+    keep space pressed = longer
+    press twice = higher        
+Game over Modal (class="modal) +css
+
+
+Stefano
+Start()
+Create multiple random Obstacles (number of, with, height) + 1 Boss every 10 obstacles / incrementing 
+make them move
+Increasing speed
+add Sounds to various triggers
+
+
+
+
+
+CONCEPT / APPEARENCE
+
+theme Pacman / early Internet 
+
+player is pacman:
+obscacles ghosts (random colors) 
+floor
+Gifts stars or 
+
+Background: darkblue + change with movement
+
+score and info Arcade games
+
+
+
+
