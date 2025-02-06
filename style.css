@@ -1,4 +1,4 @@
-@import url(./lives.css);
+
 body {
   width: 100vw;
   height: 100vh;
@@ -26,23 +26,20 @@ body {
   position: absolute;
   bottom: 0px;
   left: 100vw;
-  width: 10px;
-  height: 100px;
-  background-color: rgb(255, 115, 115);
-  animation: obstacleMove 2s infinite linear;
+  /* box-shadow: inset 5px 5px 20px 2px white; */
 }
 
 @keyframes obstacleMove {
   from {
-    left: 100vw;
+    left: 120vw;
   }
   to {
-    left: -50px;
+    left: -500px;
   }
 }
 
 .jump {
-  animation: jump 1s;
+  animation: jump 1000ms;
 }
 
 @keyframes jump {
@@ -53,6 +50,6 @@ body {
     bottom: 200px;
   }
   100% {
-    bottom: 0;
+    bottom: 0px;
   }
 }
