@@ -1,0 +1,13 @@
+#lives{
+    margin-right: 4em;
+    text-align: right;
+}
+#lives svg{
+    width: 3%;
+}
+#score{
+    position: relative;
+    left: 90%;
+    text-align: center;
+}
+
