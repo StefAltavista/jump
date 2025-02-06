@@ -1,7 +1,16 @@
+*{
+  color: rgb(126, 62, 215);
+  font-family: "Silkscreen", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 30px;
+}
+
 body {
   width: 100vw;
   height: 100vh;
   background-color: aquamarine;
+
 }
 
 /* header css */
@@ -45,6 +54,39 @@ body {
 
 .jump {
   animation: jump 1000ms;
+}
+
+.modal {
+  position: fixed;
+  z-index: 10;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  cursor: pointer;
+  padding: 30px;
+  overflow-y: auto;
+  display: flex;
+}
+.modal__main {
+  position: relative;
+  margin: auto;
+  cursor: default;
+}
+.gameOver__close {
+  background-color: transparent;
+  border: 0;
+  cursor: pointer;
+  position: absolute;
+  padding: 0;
+  line-height: 0;
+  outline: 1px solid transparent;
+  border-radius: 3px;
+}
+.gameOver__close:focus-visible {
+  outline-color: gray;
+}
+
+.gameOver__title{
+  font-size: 3em;
 }
 
 @keyframes jump {

@@ -11,6 +11,11 @@ const displayUserName = document.getElementById("displayUserName");
 console.log(displayUserName);
 const muteButton = document.getElementById("soundMute");
 const sounds = new Sounds(muteButton);
+const modal = new Modal();
+
+
+
+let mute = true;
 
 muteButton.addEventListener("click", () => {
   sounds.toggleMute();
