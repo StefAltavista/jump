@@ -15,21 +15,24 @@ const game = function () {
   );
   if (startGame){
     let userName = userInput("Enter your Name", ""); 
-    return count;
+    
+  }
+  else {
+    alert("Game Over!");
+    return game();
   }
 };
-const userInput = function (text, placeholder = "") {
+function userInput(text, placeholder = "") {
   let input = prompt(text, placeholder);
   if (input == null) {
-    console.error("write your name");
-    return userInput();
-    }
-  else if(input == Number ) {
-    console.error("write your name")
+    alert("write your Name");
     return userInput();
   }
+  else if ( input == Number){
+    alert("please use character")
+  } 
   else return input;
-};
+}
 let count = 3; 
 const timerElement = document.getElementById("timer");
 
@@ -38,7 +41,7 @@ const interval = setInterval(function() {
 
   if (count <= 0) {
       clearInterval(interval); 
-      timerElement.innerHTML = "Liftoff!"; 
+      timerElement.innerHTML = "3"; 
   } else {
       count--; 
   }
