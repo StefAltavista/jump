@@ -9,17 +9,19 @@ const score = new Score(document.getElementById("score"));
 const gameField = document.getElementById("gameField");
 const muteButton = document.getElementById("soundMute");
 const sounds = new Sounds(muteButton);
-const mute = true;
+let mute = true;
 
 muteButton.addEventListener("click", () => {
   sounds.toggleMute();
+  mute = !mute;
 });
 
 // const lifes
 
 document.addEventListener("keydown", (event) => {
+  event.preventDefault();
   if (event.code === "Space") {
-    mute ? player.jump(() => sounds.play("jump")) : player.jump(() => {});
+    !mute ? player.jump(() => sounds.play("jump")) : player.jump(() => {});
   }
 });
 
