@@ -13,12 +13,11 @@ class Obstacle {
   }
 
   createColors() {
-    console.log("colors");
     let r = Math.random() * 255;
     let g = Math.random() * 255;
     let b = Math.random() * 255;
     let mainColor = `rgb(${r}, ${g}, ${b})`;
-    let shadowColor = `rgb(${r - 50}, ${g - 50}, ${b - 50})`;
+    // let shadowColor = `rgb(${r - 50}, ${g - 50}, ${b - 50})`;
     this.element.style.background = mainColor;
     this.element.style.boxShadow = ` 0px 0px 20px 15px ${mainColor}`;
   }
