@@ -7,11 +7,9 @@ export class Modal {
   }
 
   createModalGameOver = ()=>`
-    <div class="detail">
-      <div class="detail__header">
-          <h2 class="detail__title">GAME OVER</h2>
-          <button class="modal__close">Press any button...</button>
-      </div>
+    <div class="gameOver">
+          <h2 class="gameOver__title">GAME OVER</h2>
+          <button class="gameOver__close">Press any key...</button>
     </div>
 `
   
@@ -25,17 +23,17 @@ export class Modal {
     modal.classList.add('modal');
     const modalMain = document.createElement('div');
     modalMain.classList.add('modal__main');
-    modalMain.innerHTML=modalFunction;
+    modalMain.innerHTML=modalFunction();
     modal.append(modalMain);
     document.body.append(modal);
 
-    modal.addEventListener("click", ({target})=>{
-      if (target===modal || target.closest(".modal__close")){
-          modal.remove();
-      }
-  });
+    modal.addEventListener("click", ()=>{modal.remove()});
+    document.addEventListener("keydown", (event) => {if (event.key) modal.remove()});
   };
 
+
+    
+  
 
   
 }
