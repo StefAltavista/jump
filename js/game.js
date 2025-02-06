@@ -1,133 +1,24 @@
-import { Player } from "./player.js";
-import { createObstacle, createBoss } from "./obstacle.js";
-import { checkCollision } from "./collision.js";
-import { Score } from "./score.js";
 import { Sounds } from "./sounds.js";
+import { startGame } from "./start.js";
 
-const player = new Player(document.getElementById("player"));
-const score = new Score(document.getElementById("score"));
-const gameField = document.getElementById("gameField");
 const muteButton = document.getElementById("soundMute");
+const startButton = document.getElementById("start");
+const welcomeModal = document.getElementById("welcome");
+const userDataModal = document.getElementById("userData");
+const submitDataButton = document.getElementById("submitData");
 const sounds = new Sounds(muteButton);
-let mute = true;
 
 muteButton.addEventListener("click", () => {
   sounds.toggleMute();
   mute = !mute;
 });
 
-// const lifes
-const game = function () {
-  let start = confirm(
-    "Hello There! Are you redy to play?"
-  );
-  if (start){
-    let userName = userInput("Enter your Name", ""); 
-    startGame();
-  }
-  else {
-    alert("Game Over!");
-    return game();
-  }
-};
-function userInput(text, placeholder = "") {
-  let input = prompt(text, placeholder);
-  if (input == null) {
-    alert("write your Name");
-    return userInput();
-  }
-  else if ( input == Number){
-    alert("please use character")
-  } 
-  else return input;
-}
-let count = 3; 
-const timerElement = document.getElementById("timer");
-
-const interval = setInterval(function() {
-  timerElement.innerHTML = count;
-
-  if (count <= 0) {
-      clearInterval(interval); 
-      timerElement.innerHTML = "3"; 
-  } else {
-      count--; 
-  }
-  }, 1000); 
-
-document.addEventListener("keydown", (event) => {
-  event.preventDefault();
-  if (event.code === "Space") {
-    !mute ? player.jump(() => sounds.play("jump")) : player.jump(() => {});
-  }
+startButton.addEventListener("click", () => {
+  welcomeModal.classList.add("hide");
+  userDataModal.classList.remove("hide");
 });
 
-const startGame = function () {
-  let animationID;
-  let speed = 7000;
-  let startTime = 0;
-  let lastObstacleTime = 0;
-  let obstacles = [];
-  let obstacleNum = 0;
-  let minSpawnRate = 5;
-  let maxSpawnRate = 5;
-  let newObstacle = true;
-  let boss = false;
-  let wobbleSpeed = 1;
-  if (!mute) sounds.play("start");
-
-  const animation = function (timestamp) {
-    if (!startTime) startTime = timestamp;
-    let elapsedTime = timestamp - startTime;
-
-    if (newObstacle && !boss) {
-      lastObstacleTime = elapsedTime;
-      if (obstacleNum % 2 == 0) {
-        speed = speed > 200 ? speed - 100 : speed;
-        minSpawnRate = minSpawnRate == 0 ? 0 : minSpawnRate - 1;
-      }
-
-      let bossNumber = Math.floor(speed / 500);
-      if (obstacleNum > 0 && obstacleNum % bossNumber == 0) {
-        // call Boss
-
-        obstacles[obstacleNum] = createBoss(gameField);
-        obstacles[obstacleNum].move(speed * 3);
-        obstacleNum++;
-        boss = true;
-        sounds.play("boss");
-        minSpawnRate = 5;
-        setInterval(() => {
-          boss = false;
-        }, 6000);
-      } else {
-        obstacles[obstacleNum] = createObstacle(gameField);
-        obstacles[obstacleNum].move(speed);
-        obstacleNum++;
-      }
-    }
-
-    let obstacleSpawnRate =
-      Math.random() * (maxSpawnRate - minSpawnRate) + minSpawnRate;
-    newObstacle = elapsedTime - lastObstacleTime >= obstacleSpawnRate * 1000;
-
-    if (checkCollision(player, obstacles)) {
-      obstacles.forEach((x) => x.stop());
-      if (!mute) sounds.play("lost");
-
-      // minus one life or Game over /// sounds.play("gameover")
-
-      player.stop();
-      cancelAnimationFrame(animationID);
-      return;
-    } else {
-      score.update();
-    }
-    wobbleSpeed += 0.08;
-    obstacles.forEach((x) => x.changeWidth(wobbleSpeed));
-    animationID = requestAnimationFrame(animation);
-  };
-  animationID = requestAnimationFrame(animation);
-};
-
-game();
+submitDataButton.addEventListener("click", () => {
+  userDataModal.classList.add("hide");
+  startGame(sounds);
+});

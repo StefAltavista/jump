@@ -1,9 +1,10 @@
-
 body {
   width: 100vw;
   height: 100vh;
   background-color: aquamarine;
 }
+
+/* header css */
 
 #player {
   width: 100px;
@@ -20,9 +21,9 @@ body {
   height: 50px;
   border: 2px solid white;
   border-radius: 20px;
-  position: relative;
+  /* position: relative; */
 }
-.life svg{
+.life svg {
   width: 12%;
 }
 
