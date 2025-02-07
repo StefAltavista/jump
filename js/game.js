@@ -2,6 +2,7 @@ import { Sounds } from "./sounds.js";
 import { startGame } from "./start.js";
 import { current, signIn } from "./user.js";
 import { createModal } from "./modals.js";
+import { GameStats } from "./gameStats.js";
 
 const welcomeModal = document.getElementById("welcome");
 const enterGame = document.getElementById("enterGame");
@@ -10,7 +11,19 @@ const displayUserName = document.getElementById("displayUserName");
 const muteButton = document.getElementById("soundMute");
 const sounds = new Sounds(muteButton);
 
-startGame(sounds);
+const gameStats = new GameStats(
+  document.getElementById("score"),
+  document.getElementById("life")
+);
+
+const game = async function () {
+  const { score, lifes } = await startGame(sounds, gameStats);
+  console.log(score, lifes);
+
+  // if more lifes play again else save points, exit, ask again
+};
+
+game();
 let user = current();
 
 // const gameOverModal = createModal(

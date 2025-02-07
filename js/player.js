@@ -1,6 +1,3 @@
-let singleJumpInterval;
-let doubleJumpInterval;
-
 export class Player {
   constructor(element) {
     if (!element) {
@@ -17,6 +14,9 @@ export class Player {
     this.elementPosition = 0;
     this.jumpCount = 0;
     this.element.style.bottom = this.elementPosition + "px";
+    this.jumpIntervalID;
+    this.doubleJumpIntervalID;
+    this.gravityIntervalID;
   }
 
   stop() {
@@ -24,12 +24,14 @@ export class Player {
   }
 
   jump(jumpSound) {
-    if (!this.isJumping) {
-      this.startJump();
-      jumpSound();
-    } else if (this.jumpCount === 1 && this.doubleJumpAvailable) {
-      this.doubleJump();
-      jumpSound();
+    if (!this.isColliding) {
+      if (!this.isJumping) {
+        this.startJump();
+        jumpSound();
+      } else if (this.jumpCount === 1 && this.doubleJumpAvailable) {
+        this.doubleJump();
+        jumpSound();
+      }
     }
   }
 
@@ -40,12 +42,12 @@ export class Player {
     this.elementPosition = 0;
     this.element.style.bottom = this.elementPosition + "px";
 
-    let jumpID = setInterval(() => {
+    this.jumpIntervalID = setInterval(() => {
       if (this.elementPosition < this.jumpHeight) {
         this.elementPosition += this.jumpSpeed;
         this.element.style.bottom = this.elementPosition + "px";
       } else {
-        clearInterval(jumpID);
+        clearInterval(this.jumpIntervalID);
         this.applyGravity();
       }
     }, 10);
@@ -54,25 +56,25 @@ export class Player {
   doubleJump() {
     this.doubleJumpAvailable = false;
     this.jumpCount = 2;
-    let doubleJumpID = setInterval(() => {
+
+    this.doubleJumpIntervalID = setInterval(() => {
       if (this.elementPosition < this.jumpHeight * 2) {
         this.elementPosition += this.jumpSpeed;
         this.element.style.bottom = this.elementPosition + "px";
       } else {
-        clearInterval(doubleJumpID);
+        clearInterval(this.doubleJumpIntervalID);
         this.applyGravity();
       }
     }, 10);
-    return doubleJumpInterval;
   }
 
   applyGravity() {
-    let gravityID = setInterval(() => {
+    this.gravityIntervalID = setInterval(() => {
       if (this.elementPosition > 0 && !this.isColliding) {
         this.elementPosition -= this.gravity;
         this.element.style.bottom = this.elementPosition + "px";
       } else {
-        clearInterval(gravityID);
+        clearInterval(this.gravityIntervalID);
         this.isJumping = false;
         this.doubleJumpAvailable = false;
       }
