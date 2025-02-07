@@ -89,9 +89,8 @@ const startGame = function (sounds, gameStats) {
         player.stop();
         gameStats.updateLifes(gameStats.lifes - 1);
         gameStats.lifes == 0 ? sounds.play("gameover") : sounds.play("lost");
-        // document.removeEventListener("keydown", player.jump);
         cancelAnimationFrame(animationID);
-        return resolve(obstacles);
+        return resolve({ obstacles, player });
       } else {
         gameStats.updateScore();
       }

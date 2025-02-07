@@ -81,7 +81,7 @@ if (!user) {
 }
 
 const game = async function () {
-  const obstacles = await startGame(sounds, gameStats);
+  const { obstacles, player } = await startGame(sounds, gameStats);
   if (gameStats.lifes > 0) {
     const restartModal = createModal(
       `<div class="modals noBackground">
@@ -94,6 +94,7 @@ const game = async function () {
     );
     const restartButton = document.getElementById("restart");
     restartButton.addEventListener("click", () => {
+      player.element.remove();
       obstacles.forEach((obstacle) => {
         obstacle.element.remove();
         restartModal.remove();
