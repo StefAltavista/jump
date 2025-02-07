@@ -1,6 +1,8 @@
 import { createObstacle, createBoss } from "./obstacle.js";
 import { checkCollision } from "./collision.js";
 import { Player } from "./player.js";
+import { createModal } from "./modals.js";
+
 
 const player = new Player(document.getElementById("player"));
 
@@ -24,18 +26,24 @@ const startGame = function (sounds, score) {
 
     // open TIMER modal
 
+  const timerModal = createModal(
+    `<div id="timer" class="modals">
+    </div>`,
+      true, false
+  );
+
     let count = 3;
     const timerElement = document.getElementById("timer");
     const intervalID = setInterval(function () {
-      timerElement.innerHTML = count;
-      if (count > 0) {
+      timerElement.innerHTML = `<h2> ${count} </h2>`;
+      if (count >= 0) {
         count--;
       } else {
-        // GO!
+        timerElement.innerHTML = `<h2> GO! </h2>`;
         animationID = requestAnimationFrame(animation);
         sounds.play("start");
         clearInterval(intervalID);
-        // call startGame()
+        timerModal.remove();
       }
     }, 1000);
 
