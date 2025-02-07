@@ -87,7 +87,7 @@ const game = async function () {
       `<div class="modals noBackground">
         <h2 class="gameOver__title">Life Left: ${gameStats.lifes}</h2>
         <h3 class="gameOver__title">Current Score: ${gameStats.score}</h3>
-        <button id="restart">Press any key...</button>
+        <button id="restart">Retry</button>
       </div>`,
       true,
       true
@@ -102,31 +102,61 @@ const game = async function () {
       return game();
     });
   } else {
-    const gameOverModal = createModal(
-      `<div class="gameOver noBackground">
-        <h2 class="gameOver__title">GAME OVER</h2>
-        <div class="gameOver__close">Press any key...</div>
-      </div>`,
-      false,
-      true
-    );
-
     if (user.checkNewRecord(gameStats.score)) {
       console.log("new Record!");
       user.updateScoreRecord(gameStats.score);
       user.save(user);
     }
-
-    const allUsers = getAllScore();
-    const list = allUsers
-      .map((x) => `<li><p>${x.name}: ${x.scoreRecord}</p></li>`)
-      .join("");
-    console.log(list);
-    const recordModal = createModal(
-      `<div class="recordsmodal modal"><h1>Jump Records</h1><ul>${list}</div>`,
+    const gameOverModal = createModal(
+      `<div class="gameOver noBackground">
+        <h2 class="gameOver__title">GAME OVER</h2>
+        <p>Score: ${user.scoreRecord}</p>
+        ${
+          user.checkNewRecord(gameStats.score)
+            ? "<h3>You Made a new Record!</h3>"
+            : ``
+        }
+        <button id="newGame">New game</button><button id="changeUser">Change User</button><button id="viewList">Veiw Record List</button>
+      </div>`,
       true,
       true
     );
+
+    const newGameButton = document.getElementById("newGame");
+
+    newGameButton.addEventListener("click", async () => {
+      gameOverModal.remove();
+      return game();
+    });
+    const changeUserButton = document.getElementById("changeUser");
+
+    changeUserButton.addEventListener("click", () => {
+      gameOverModal.remove();
+      localStorage.removeItem("current");
+      user = null;
+      changeUser.remove();
+      location.reload();
+    });
+    const viewListButton = document.getElementById("viewList");
+
+    viewListButton.addEventListener("click", () => {
+      gameOverModal.remove();
+      const allUsers = getAllScore();
+      const list = allUsers
+        .map((x) => `<li><p>${x.name}: ${x.scoreRecord}</p></li>`)
+        .join("");
+      const recordModal = createModal(
+        `<div class="recordsmodal modals"><h1>Jump Records</h1><div class="recordList"><ul>${list}</ul></div>
+    <button id="exit">Exit</button></div>`,
+        true,
+        false
+      );
+      const exitButton = document.getElementById("exit");
+      exitButton.addEventListener("click", () => {
+        exitButton.remove();
+        location.reload();
+      });
+    });
   }
 };
 
@@ -134,11 +164,8 @@ function getAllScore() {
   let keys = Object.keys(localStorage);
   keys = keys.filter((x) => x.includes("id"));
   let allUsers = [];
-
   for (let i = 0; i < keys.length; i++) {
     allUsers[i] = JSON.parse(localStorage.getItem(keys[i]));
   }
-  // console.log(allUsers);
-
   return allUsers;
 }

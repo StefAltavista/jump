@@ -3,7 +3,7 @@ export class GameStats {
     this.scoreElement = scoreElement;
     this.score = 0;
     this.lifeElement = lifeElement;
-    this.lifes = 1;
+    this.lifes = 3;
     this.updateLifes(this.lifes);
   }
 
