@@ -6,7 +6,10 @@ import { createModal } from "./modals.js";
 const gameField = document.getElementById("gameField");
 
 const startGame = function (sounds, gameStats) {
-  const player = new Player(document.getElementById("player"));
+  const playerElement = document.createElement("div");
+  playerElement.setAttribute("id", "player");
+  gameField.appendChild(playerElement);
+  const player = new Player(playerElement);
   document.addEventListener("keydown", (event) => {
     console.log("event Listener on");
     event.preventDefault();
