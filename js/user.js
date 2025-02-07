@@ -1,5 +1,5 @@
-const submitDataButton = document.getElementById("submitData");
-const userDataInput = document.querySelector(".userDataInput");
+// const submitDataButton = document.getElementById("submitData");
+// const userDataInput = document.querySelector(".userDataInput");
 
 class User {
   constructor(name) {
@@ -33,7 +33,7 @@ export function current() {
   } else return null;
 }
 
-export function signIn() {
+export function signIn(submitDataButton, userDataInput) {
   console.log("sgning in");
 
   return new Promise(
