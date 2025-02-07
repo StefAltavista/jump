@@ -32,22 +32,24 @@ const startGame = function (sounds, score) {
       true, false
   );
 
-    let count = 3;
-    const timerElement = document.getElementById("timer");
-    const intervalID = setInterval(function () {
-      timerElement.innerHTML = `<h2> ${count} </h2>`;
-      if (count >= 0) {
-        count--;
-      } else {
-        timerElement.innerHTML = `<h2> GO! </h2>`;
-        animationID = requestAnimationFrame(animation);
-        sounds.play("start");
-        clearInterval(intervalID);
-        timerModal.remove();
-      }
-    }, 1000);
+  let count = 3;
+  const timerElement = document.getElementById("timer");
+  const intervalID = setInterval(function () {
+    timerElement.innerHTML = `<h2> ${count} </h2>`;
+    if (count >= 0) {
+      count--;
+    } else {
+      timerElement.innerHTML = `<h2> GO! </h2>`;
 
-    // till here
+      sounds.play("start");
+      animationID = requestAnimationFrame(animation);
+      clearInterval(intervalID);
+      timerModal.remove();
+    }
+  }, 1000);
+
+  // till here
+
 
     document.addEventListener("keydown", (event) => {
       event.preventDefault();
