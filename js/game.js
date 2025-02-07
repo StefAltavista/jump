@@ -1,43 +1,38 @@
 import { Sounds } from "./sounds.js";
 import { startGame } from "./start.js";
-import { User } from "./user.js";
+import { current, signIn } from "./user.js";
 
 const welcomeModal = document.getElementById("welcome");
-const startButton = document.getElementById("start");
-const userDataModal = document.getElementById("userData");
-const submitDataButton = document.getElementById("submitData");
-const userDataInput = document.querySelector(".userDataInput");
+const enterGame = document.getElementById("enterGame");
+const signInModal = document.getElementById("signInModal");
 const displayUserName = document.getElementById("displayUserName");
-console.log(displayUserName);
 const muteButton = document.getElementById("soundMute");
 const sounds = new Sounds(muteButton);
 
+let user = current();
+
+if (user) {
+  displayUserName.innerHTML = `<p>${user.name}</p>`;
+} else {
+  const signInButton = document.createElement("button");
+  signInButton.setAttribute("id", "signin");
+  displayUserName.appendChild(signInButton);
+  signInButton.addEventListener("click", () => {
+    console.log("open Sign In Modal");
+  });
+}
+
+enterGame.addEventListener("click", async () => {
+  welcomeModal.classList.add("hide");
+
+  if (!user) {
+    signInModal.classList.remove("hide");
+    user = await signIn();
+    signInModal.classList.add("hide");
+    startGame(sounds);
+  } else startGame(sounds);
+});
+
 muteButton.addEventListener("click", () => {
   sounds.toggleMute();
-});
-
-startButton.addEventListener("click", () => {
-  welcomeModal.classList.add("hide");
-  userDataModal.classList.remove("hide");
-});
-
-submitDataButton.addEventListener("click", () => {
-  let name = userDataInput.value;
-  if (!name) {
-    console.log("error: Name is empty");
-    return;
-  }
-  name = name.trim();
-
-  if (!/^[a-zA-Z0-9\s]+$/.test(name) || name.length < 3 || name.length > 20) {
-    console.log("error: Invalid name");
-    return;
-  }
-
-  const uid = `id-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
-  const user = new User(uid, name);
-  localStorage.setItem(user.uid, JSON.stringify(user));
-  displayUserName.innerText = user.name;
-  userDataModal.classList.add("hide");
-  startGame(sounds);
 });
