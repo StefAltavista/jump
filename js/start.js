@@ -27,7 +27,7 @@ const startGame = function (sounds) {
   // open TIMER modal
 
   const timerModal = createModal(
-    `<div id="timer" class="modal">
+    `<div id="timer" class="modals">
     </div>`,
       true, false
   );

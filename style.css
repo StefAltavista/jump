@@ -112,6 +112,21 @@ header {
   background-color: aliceblue;
 }
 
+.modals{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 1em;
+}
+
+.modals button{
+  width: 100%;
+}
+
+#timer h2{
+  font-size: 5em;
+}
+
 .gameOver__close {
   background-color: transparent;
   border: 0;

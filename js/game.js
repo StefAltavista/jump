@@ -31,7 +31,7 @@ if (user) {
   signInButton.addEventListener("click", () => {
     console.log("open Sign In Modal");
     const signInModal = createModal(
-      `<div id="signInModal" class="modal">
+      `<div id="signInModal" class="modals modal_signIn">
           <h3>Enter your Name</h3>
           <input type="text" class="userDataInput" required/>
           <button id="submitData">Start</button>
@@ -43,7 +43,7 @@ if (user) {
 
 // at beginnig open Start Modal
 const welcomeModal = createModal(
-  `<div id="welcome" class="modal modal_start">
+  `<div id="welcome" class="modals modal_start">
       <h2>Welcome to Jump!</h2>
       <button id="enterGame">Enter Game</button>
     </div>`,
@@ -60,7 +60,7 @@ enterGame.addEventListener("click", async () => {
 
   if (!user) {
     const signInModal = createModal(
-      `<div id="signInModal" class="modal">
+      `<div id="signInModal" class="modals modal_signIn">
           <h3>Enter your Name</h3>
           <input type="text" class="userDataInput" required/>
           <button id="submitData">Start</button>
@@ -74,7 +74,7 @@ enterGame.addEventListener("click", async () => {
     user = await signIn(submitDataButton, userDataInput);
     signInModal.remove();
 
-    
+
     startGame(sounds);
   } else startGame(sounds);
 });
