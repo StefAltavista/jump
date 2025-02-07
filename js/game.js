@@ -12,7 +12,6 @@ const sounds = new Sounds(muteButton);
 
 let user = current();
 
-user = null;                  // !!!!!!!!!!!!!!! DELETE AFTER TESTING!!!!!!!!!!!!!!!!!!!!!!!
 
 // const gameOverModal = createModal(
 //   `<div class="gameOver noBackground">
@@ -30,14 +29,14 @@ if (user) {
   displayUserName.appendChild(signInButton);
   signInButton.addEventListener("click", () => {
     console.log("open Sign In Modal");
-    const signInModal = createModal(
-      `<div id="signInModal" class="modals modal_signIn">
-          <h3>Enter your Name</h3>
-          <input type="text" class="userDataInput" required/>
-          <button id="submitData">Start</button>
-        </div>`,
-      true, false
-    );
+    // const signInModal = createModal(
+    //   `<div id="signInModal" class="modals modal_signIn">
+    //       <h3>Enter your Name</h3>
+    //       <input type="text" class="userDataInput" required/>
+    //       <button id="submitData">Start</button>
+    //     </div>`,
+    //   true, false
+    // );
   });
 }
 

@@ -42,6 +42,7 @@ const startGame = function (sounds) {
       timerElement.innerHTML = `<h2> GO! </h2>`;
 
       sounds.play("start");
+      animationID = requestAnimationFrame(animation);
       clearInterval(intervalID);
       timerModal.remove();
     }
@@ -49,7 +50,6 @@ const startGame = function (sounds) {
 
   // till here
 
-  animationID = requestAnimationFrame(animation);
 
   document.addEventListener("keydown", (event) => {
     event.preventDefault();
