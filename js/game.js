@@ -3,22 +3,31 @@ import { startGame } from "./start.js";
 import { User } from "./user.js";
 
 const welcomeModal = document.getElementById("welcome");
-const startButton = document.getElementById("start");
+const enterGame = document.getElementById("enterGame");
 const userDataModal = document.getElementById("userData");
 const submitDataButton = document.getElementById("submitData");
 const userDataInput = document.querySelector(".userDataInput");
 const displayUserName = document.getElementById("displayUserName");
-console.log(displayUserName);
 const muteButton = document.getElementById("soundMute");
 const sounds = new Sounds(muteButton);
+let user;
+
+if (localStorage.getItem("current")) {
+  user = localStorage.getItem("current");
+  user = JSON.parse(user);
+  displayUserName.innerText = user.name;
+}
 
 muteButton.addEventListener("click", () => {
   sounds.toggleMute();
 });
 
-startButton.addEventListener("click", () => {
+enterGame.addEventListener("click", () => {
   welcomeModal.classList.add("hide");
-  userDataModal.classList.remove("hide");
+
+  if (!user) {
+    userDataModal.classList.remove("hide");
+  } else startGame();
 });
 
 submitDataButton.addEventListener("click", () => {
@@ -34,9 +43,9 @@ submitDataButton.addEventListener("click", () => {
     return;
   }
 
-  const uid = `id-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
-  const user = new User(uid, name);
-  localStorage.setItem(user.uid, JSON.stringify(user));
+  const user = new User(name);
+  user.save();
+  localStorage.setItem("current", JSON.stringify(user));
   displayUserName.innerText = user.name;
   userDataModal.classList.add("hide");
   startGame(sounds);
