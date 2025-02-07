@@ -10,6 +10,7 @@ const displayUserName = document.getElementById("displayUserName");
 const muteButton = document.getElementById("soundMute");
 const sounds = new Sounds(muteButton);
 
+startGame(sounds);
 let user = current();
 
 // const gameOverModal = createModal(
@@ -41,28 +42,28 @@ if (user) {
 //   true
 // );
 
-enterGame.addEventListener("click", async () => {
-  // welcomeModal.classList.add("hide");
+// enterGame.addEventListener("click", async () => {
+//   // welcomeModal.classList.add("hide");
 
-  // close Start Modal
+//   // close Start Modal
 
-  if (!user) {
-    // open Sing In modal
+//   if (!user) {
+//     // open Sing In modal
 
-    // signInModal.classList.remove("hide");
+//     // signInModal.classList.remove("hide");
 
-    // <div id="signInModal" class="modal hide">
-    //     <h3>Enter your Name</h3>
-    //     <input type="text" class="userDataInput" />
-    //     <button id="submitData">Start</button>
-    //   </div>
+//     // <div id="signInModal" class="modal hide">
+//     //     <h3>Enter your Name</h3>
+//     //     <input type="text" class="userDataInput" />
+//     //     <button id="submitData">Start</button>
+//     //   </div>
 
-    user = await signIn();
-    signInModal.classList.add("hide");
+//     user = await signIn();
+//     signInModal.classList.add("hide");
 
-    startGame(sounds);
-  } else startGame(sounds);
-});
+//     startGame(sounds);
+//   } else startGame(sounds);
+// });
 
 muteButton.addEventListener("click", () => {
   sounds.toggleMute();

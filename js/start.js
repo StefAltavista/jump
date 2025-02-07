@@ -32,7 +32,7 @@ const startGame = function (sounds) {
       count--;
     } else {
       // GO!
-
+      animationID = requestAnimationFrame(animation);
       sounds.play("start");
       clearInterval(intervalID);
       // call startGame()
@@ -40,8 +40,6 @@ const startGame = function (sounds) {
   }, 1000);
 
   // till here
-
-  animationID = requestAnimationFrame(animation);
 
   document.addEventListener("keydown", (event) => {
     event.preventDefault();
@@ -97,6 +95,7 @@ const startGame = function (sounds) {
     } else {
       score.update();
     }
+
     wobbleSpeed += 0.08;
     obstacles.forEach((x) => x.changeWidth(wobbleSpeed));
     animationID = requestAnimationFrame(animation);
