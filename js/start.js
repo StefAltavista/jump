@@ -3,11 +3,10 @@ import { checkCollision } from "./collision.js";
 import { Player } from "./player.js";
 import { createModal } from "./modals.js";
 
-const player = new Player(document.getElementById("player"));
-
 const gameField = document.getElementById("gameField");
 
 const startGame = function (sounds, gameStats) {
+  const player = new Player(document.getElementById("player"));
   document.addEventListener("keydown", (event) => {
     console.log("event Listener on");
     event.preventDefault();
