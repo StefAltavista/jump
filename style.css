@@ -89,7 +89,7 @@ body {
   font-size: 3em;
 }
 
-@keyframes jump {
+/* @keyframes jump {
   0% {
     bottom: 0px;
   }
@@ -99,4 +99,4 @@ body {
   100% {
     bottom: 0px;
   }
-}
+} */
