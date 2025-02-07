@@ -1,4 +1,4 @@
-*{
+* {
   color: rgb(126, 62, 215);
   font-family: "Silkscreen", serif;
   font-weight: 400;
@@ -11,7 +11,7 @@ body {
   height: 100vh;
   background-color: rgb(102, 184, 162);
 }
-header{
+header {
   height: 10%;
   display: flex;
   justify-content: space-between;
@@ -19,28 +19,27 @@ header{
   border: 2px solid white;
   border-radius: 20px;
 }
-.logo{
+.logo {
   display: flex;
   width: 20%;
 }
-.logo img{
+.logo img {
   width: 100px;
-  
 }
-.logo h1{
+.logo h1 {
   display: inline;
   font-size: 1.5em;
   position: relative;
   bottom: 80%;
 }
-.settings{
+.settings {
   display: flex;
   justify-content: space-around;
   align-items: center;
   position: relative;
   width: 50%;
 }
-#displayUserName{
+#displayUserName {
   margin-right: 20px;
   padding-right: 40px;
   font-size: 1.5em;
@@ -49,18 +48,18 @@ header{
   width: 200px;
   font-size: 1.5em;
 }
-.life{
+.life {
   width: 10%;
 }
 
-.life svg{
+.life svg {
   width: 20%;
   height: 60%;
   position: relative;
   left: 8%;
 }
 
-.hide{
+.hide {
   display: none;
 }
 #player {
@@ -103,10 +102,16 @@ header{
   display: flex;
 }
 .modal__main {
+  width: 50%;
+  background-color: rgb(255, 209, 255);
   position: relative;
   margin: auto;
   cursor: default;
 }
+.actionModal {
+  background-color: aliceblue;
+}
+
 .gameOver__close {
   background-color: transparent;
   border: 0;
@@ -121,7 +126,7 @@ header{
   outline-color: gray;
 }
 
-.gameOver__title{
+.gameOver__title {
   font-size: 3em;
 }
 
