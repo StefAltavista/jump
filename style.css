@@ -1,31 +1,62 @@
+*{
+  font-family: "Silkscreen", serif;
+}
 body {
   width: 100vw;
   height: 100vh;
   background-color: rgb(102, 184, 162);
 }
 header{
-  height: 7%;
+  height: 10%;
   display: flex;
-  justify-content: space-evenly;
-  align-items: center;
+  justify-content: space-between;
   margin-right: 5%;
   border: 2px solid white;
   border-radius: 20px;
 }
-.life{
-  width: 70%;
+.logo{
+  display: flex;
+  width: 20%;
+}
+.logo img{
+  width: 100px;
   
+}
+.logo h1{
+  display: inline;
+  font-size: 1.5em;
+  position: relative;
+  bottom: 80%;
+}
+.settings{
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  position: relative;
+  width: 50%;
+}
+#displayUserName{
+  margin-right: 20px;
+  padding-right: 40px;
+  font-size: 1.5em;
 }
 #score {
-  width: 400px;
+  width: 200px;
   font-size: 1.5em;
-  
 }
+.life{
+  width: 10%;
+}
+
 .life svg{
-  width: 4%;
+  width: 20%;
   height: 60%;
   position: relative;
-  left: 84%;
+  left: 8%;
+}
+
+.hide{
+  display: none;
 }
 #player {
   width: 100px;
