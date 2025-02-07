@@ -37,7 +37,7 @@ export class Sounds {
       jump: new Audio("./sounds/jump.mp3"),
       lost: new Audio("./sounds/collision.mp3"),
       boss: new Audio("./sounds/boss.mp3"),
-      gameover: new Audio("../sounds/gameover.mp3"),
+      gameover: new Audio("./sounds/gameover.mp3"),
     };
     this.muteButton = muteButton;
     this.isMuted = false;
