@@ -2,6 +2,7 @@ import { Sounds } from "./sounds.js";
 import { startGame } from "./start.js";
 import { current, signIn } from "./user.js";
 import { createModal } from "./modals.js";
+import  {GameStats} from "./gameStats.js"
 
 // const welcomeModal = document.getElementById("welcome");
 // const enterGame = document.getElementById("enterGame");
@@ -65,9 +66,9 @@ const welcomeModal = createModal(
 const enterGame = document.getElementById("enterGame");
 
 
-// enterGame.addEventListener("click", async () => {
-//  
-//   // close Start Modal
+enterGame.addEventListener("click", async () => {
+  //  
+  //   // close Start Modal
   welcomeModal.remove();
 
   if (!user) {
@@ -96,3 +97,4 @@ const enterGame = document.getElementById("enterGame");
     });
   }
 
+})
