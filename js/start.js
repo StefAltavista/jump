@@ -9,6 +9,7 @@ const gameField = document.getElementById("gameField");
 
 const startGame = function (sounds, gameStats) {
   document.addEventListener("keydown", (event) => {
+    console.log("event Listener on");
     event.preventDefault();
     if (event.code === "Space") {
       player.jump(() => sounds.play("jump"));
@@ -89,6 +90,7 @@ const startGame = function (sounds, gameStats) {
         player.stop();
         gameStats.updateLifes(gameStats.lifes - 1);
         gameStats.lifes == 0 ? sounds.play("gameover") : sounds.play("lost");
+
         cancelAnimationFrame(animationID);
         return resolve({ obstacles, player });
       } else {
