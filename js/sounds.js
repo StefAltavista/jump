@@ -33,10 +33,10 @@ const unmute = `<svg height="50px" width="50px" version="1.1" id="Layer_1" xmlns
 export class Sounds {
   constructor(muteButton) {
     this.sounds = {
-      start: new Audio("../sounds/start.mp3"),
-      jump: new Audio("../sounds/jump.mp3"),
-      lost: new Audio("../sounds/collision.mp3"),
-      boss: new Audio("../sounds/boss.mp3"),
+      start: new Audio("./sounds/start.mp3"),
+      jump: new Audio("./sounds/jump.mp3"),
+      lost: new Audio("./sounds/collision.mp3"),
+      boss: new Audio("./sounds/boss.mp3"),
       gameover: new Audio("../sounds/gameover.mp3"),
     };
     this.muteButton = muteButton;
