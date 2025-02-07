@@ -1,20 +1,22 @@
-// const submitDataButton = document.getElementById("submitData");
-// const userDataInput = document.querySelector(".userDataInput");
-
-class User {
-  constructor(name) {
-    this.uid = this.generateID();
+export class User {
+  constructor(name, uid = this.generateID(), scoreRecord = 0) {
+    this.uid = uid;
     this.name = name;
-    this.scoreRecord = 0;
+    this.scoreRecord = scoreRecord;
   }
   generateID = () => `id-${Date.now()}-${Math.floor(Math.random() * 10000)}`;
 
-  save() {
-    localStorage.setItem(this.uid, JSON.stringify(this));
+  updateScoreRecord(newRecord) {
+    this.scoreRecord = newRecord;
   }
-  load() {
-    let userData = localStorage.getItem(this.uid);
-    return userData ? JSON.parse(userData) : null;
+  save(user) {
+    localStorage.setItem(user.uid, JSON.stringify(user));
+  }
+  static load(uid) {
+    const userData = JSON.parse(localStorage.getItem(uid));
+    if (!userData) return null;
+
+    return new User(userData.name, uid, userData.scoreRecord);
   }
   checkNewRecord(score) {
     if (score > this.scoreRecord) {
@@ -28,14 +30,11 @@ export function current() {
   if (localStorage.getItem("current")) {
     let uid = localStorage.getItem("current");
     let user = JSON.parse(localStorage.getItem(uid));
-
     return user;
   } else return null;
 }
 
 export function signIn(submitDataButton, userDataInput) {
-  console.log("sgning in");
-
   return new Promise(
     (resolve) => {
       submitDataButton.addEventListener("click", () => {
@@ -51,9 +50,9 @@ export function signIn(submitDataButton, userDataInput) {
         } else {
           name = name.trim();
           const user = new User(name);
-          user.save();
           localStorage.setItem("current", user.uid);
           displayUserName.innerText = user.name;
+          user.save(user);
           resolve(user);
         }
       });

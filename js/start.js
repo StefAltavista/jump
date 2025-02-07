@@ -3,12 +3,18 @@ import { checkCollision } from "./collision.js";
 import { Player } from "./player.js";
 import { createModal } from "./modals.js";
 
-
 const player = new Player(document.getElementById("player"));
 
 const gameField = document.getElementById("gameField");
 
-const startGame = function (sounds, score) {
+const startGame = function (sounds, gameStats) {
+  document.addEventListener("keydown", (event) => {
+    event.preventDefault();
+    if (event.code === "Space") {
+      player.jump(() => sounds.play("jump"));
+    }
+  });
+
   return new Promise((resolve) => {
     let animationID;
     let speed = 7000;
@@ -22,41 +28,28 @@ const startGame = function (sounds, score) {
     let boss = false;
     let wobbleSpeed = 1;
 
-    // COUNTER
-
-    // open TIMER modal
-
-  const timerModal = createModal(
-    `<div id="timer" class="modals">
+    const timerModal = createModal(
+      `<div id="timer" class="modals">
     </div>`,
-      true, false
-  );
+      true,
+      false
+    );
 
-  let count = 3;
-  const timerElement = document.getElementById("timer");
-  const intervalID = setInterval(function () {
-    timerElement.innerHTML = `<h2> ${count} </h2>`;
-    if (count >= 0) {
-      count--;
-    } else {
-      timerElement.innerHTML = `<h2> GO! </h2>`;
+    let count = 3;
+    const timerElement = document.getElementById("timer");
+    const intervalID = setInterval(function () {
+      timerElement.innerHTML = `<h2> ${count} </h2>`;
+      if (count >= 0) {
+        count--;
+      } else {
+        timerElement.innerHTML = `<h2> GO! </h2>`;
 
-      sounds.play("start");
-      animationID = requestAnimationFrame(animation);
-      clearInterval(intervalID);
-      timerModal.remove();
-    }
-  }, 1000);
-
-  // till here
-
-
-    document.addEventListener("keydown", (event) => {
-      event.preventDefault();
-      if (event.code === "Space") {
-        player.jump(() => sounds.play("jump"));
+        sounds.play("start");
+        animationID = requestAnimationFrame(animation);
+        clearInterval(intervalID);
+        timerModal.remove();
       }
-    });
+    }, 1000);
 
     const animation = function (timestamp) {
       if (!startTime) startTime = timestamp;
@@ -77,7 +70,7 @@ const startGame = function (sounds, score) {
           boss = true;
           sounds.play("boss");
           minSpawnRate = 5;
-          setInterval(() => {
+          setTimeout(() => {
             boss = false;
           }, 6000);
         } else {
@@ -94,14 +87,13 @@ const startGame = function (sounds, score) {
       if (checkCollision(player, obstacles)) {
         obstacles.forEach((x) => x.stop());
         player.stop();
-
-        score.updateLifes(score.lifes - 1);
-        score.lifes == 0 ? sounds.play("gameover") : sounds.play("lost");
-
+        gameStats.updateLifes(gameStats.lifes - 1);
+        gameStats.lifes == 0 ? sounds.play("gameover") : sounds.play("lost");
+        document.removeEventListener("keydown", player.jump);
         cancelAnimationFrame(animationID);
-        resolve(score);
+        return resolve(obstacles);
       } else {
-        score.updateScore();
+        gameStats.updateScore();
       }
 
       wobbleSpeed += 0.08;
