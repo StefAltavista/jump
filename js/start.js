@@ -20,6 +20,10 @@ const startGame = function (sounds) {
   let boss = false;
   let wobbleSpeed = 1;
 
+  // COUNTER
+
+  // open TIMER modal
+
   let count = 3;
   const timerElement = document.getElementById("timer");
   const intervalID = setInterval(function () {
@@ -27,11 +31,17 @@ const startGame = function (sounds) {
     if (count > 0) {
       count--;
     } else {
+      // GO!
+
       sounds.play("start");
       clearInterval(intervalID);
-      animationID = requestAnimationFrame(animation);
+      // call startGame()
     }
   }, 1000);
+
+  // till here
+
+  animationID = requestAnimationFrame(animation);
 
   document.addEventListener("keydown", (event) => {
     event.preventDefault();

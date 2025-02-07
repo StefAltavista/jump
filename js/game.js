@@ -20,14 +20,6 @@ let user = current();
 //   false
 // );
 
-// const startModal = createModal(
-//   `<div id="welcome" class="modal">
-//       <h2>Welcome to Jump!</h2>
-//       <button id="enterGame">Enter Game</button>
-//     </div>`,
-//   true
-// );
-
 if (user) {
   displayUserName.innerHTML = `<p>${user.name}</p>`;
 } else {
@@ -39,13 +31,35 @@ if (user) {
   });
 }
 
+// at beginnig open Start Modal
+
+// const startModal = createModal(
+//   `<div id="welcome" class="modal">
+//       <h2>Welcome to Jump!</h2>
+//       <button id="enterGame">Enter Game</button>
+//     </div>`,
+//   true
+// );
+
 enterGame.addEventListener("click", async () => {
-  welcomeModal.classList.add("hide");
+  // welcomeModal.classList.add("hide");
+
+  // close Start Modal
 
   if (!user) {
-    signInModal.classList.remove("hide");
+    // open Sing In modal
+
+    // signInModal.classList.remove("hide");
+
+    // <div id="signInModal" class="modal hide">
+    //     <h3>Enter your Name</h3>
+    //     <input type="text" class="userDataInput" />
+    //     <button id="submitData">Start</button>
+    //   </div>
+
     user = await signIn();
     signInModal.classList.add("hide");
+
     startGame(sounds);
   } else startGame(sounds);
 });
