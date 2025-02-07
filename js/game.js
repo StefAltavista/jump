@@ -101,6 +101,6 @@ const startGame = function () {
 
 // if gameOver modal.renderModal(modal.createModalGameOver);
 
-  modal.renderModal(modal.createModalGameOver);
+  // modal.renderModal(modal.createModalGameOver);
 
 startGame();
