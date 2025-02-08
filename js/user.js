@@ -51,7 +51,7 @@ export function signIn(submitDataButton, userDataInput) {
           name = name.trim();
           const user = new User(name);
           localStorage.setItem("current", user.uid);
-          displayUserName.innerText = `<p>Player: ${user.name}</p>`;
+          displayUserName.innerHTML = `<p>Player: ${user.name}</p>`;
           user.save(user);
           resolve(user);
         }
