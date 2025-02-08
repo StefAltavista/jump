@@ -19,11 +19,15 @@ header {
   padding: 0 2em;
   border: 2px solid white;
   border-radius: 0.9em;
-  align-items: center;
+  align-items: stretch;
 }
 .header_title{
   display: flex;
   align-items: start;
+}
+.header_title img{
+  width: 150px;
+  height: 170px;
 }
 
 .logo {
@@ -43,11 +47,10 @@ header {
   display: flex;
   justify-content: space-around;
   align-items: center;
-  gap: 0.5em;
-  /* width: 50%; */
+  gap: 1.5em;
+  
 }
 #displayUserName p{
-  /* margin-right: 1em; */
   font-size: 1em;
   color: rgb(100, 24, 24);
   text-decoration:underline;
