@@ -21,10 +21,10 @@ let welcomeModal;
 
 if (user) {
   user = User.load(localStorage.getItem("current"));
-  displayUserName.innerHTML = `<p>${user.name}</p>`;
+  displayUserName.innerHTML = `<p>Player: ${user.name}</p>`;
   welcomeModal = createModal(
     `<div id="welcome" class="modals modal_start">
-        <h2>Welcome to Jump ${user.name}</h2>
+        <h2>Welcome to Jumping ${user.name}</h2>
         <button id="enterGame">New game</button><button id="changeUser">Change User</button>
       </div>`,
     true,
@@ -67,6 +67,7 @@ if (!user) {
       `<div id="signInModal" class="modals modal_signIn">
           <h3>Enter your Name</h3>
           <input type="text" class="userDataInput" required/>
+          <p id="note">Only letters are allowed<br/>between 3 and 20 characters</p>
           <button id="submitData">Start</button>
         </div>`,
       true,
@@ -95,9 +96,9 @@ const game = async function () {
     const restartButton = document.getElementById("restart");
     restartButton.addEventListener("click", () => {
       player.element.remove();
+      restartModal.remove();
       obstacles.forEach((obstacle) => {
         obstacle.element.remove();
-        restartModal.remove();
       });
 
       return game();
@@ -126,16 +127,21 @@ const game = async function () {
     const newGameButton = document.getElementById("newGame");
 
     newGameButton.addEventListener("click", async () => {
+      gameStats.reset();
       gameOverModal.remove();
+      obstacles.forEach((obstacle) => {
+        obstacle.element.remove();
+      });
+      player.element.remove();
       return game();
     });
     const changeUserButton = document.getElementById("changeUser");
 
     changeUserButton.addEventListener("click", () => {
-      gameOverModal.remove();
       localStorage.removeItem("current");
       user = null;
       changeUser.remove();
+
       location.reload();
     });
     const viewListButton = document.getElementById("viewList");
@@ -154,7 +160,7 @@ const game = async function () {
       );
       const exitButton = document.getElementById("exit");
       exitButton.addEventListener("click", () => {
-        exitButton.remove();
+        recordModal.remove();
         location.reload();
       });
     });
@@ -168,5 +174,6 @@ function getAllScore() {
   for (let i = 0; i < keys.length; i++) {
     allUsers[i] = JSON.parse(localStorage.getItem(keys[i]));
   }
+  allUsers.sort((a, b) => b.scoreRecord - a.scoreRecord);
   return allUsers;
 }

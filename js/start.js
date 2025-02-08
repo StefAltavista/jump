@@ -11,7 +11,6 @@ const startGame = function (sounds, gameStats) {
   gameField.appendChild(playerElement);
   const player = new Player(playerElement);
   document.addEventListener("keydown", (event) => {
-    console.log("event Listener on");
     event.preventDefault();
     if (event.code === "Space") {
       player.jump(() => sounds.play("jump"));

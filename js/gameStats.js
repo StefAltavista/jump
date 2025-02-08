@@ -29,4 +29,9 @@ export class GameStats {
   </svg>`;
     }
   }
+  reset() {
+    this.score = 0;
+    this.lifes = 3;
+    this.updateLifes(3);
+  }
 }

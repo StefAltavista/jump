@@ -3,25 +3,31 @@
   font-family: "Silkscreen", serif;
   font-weight: 400;
   font-style: normal;
-  font-size: 30px;
+  font-size: 25px;
 }
 
 body {
   width: 100vw;
   height: 100vh;
-  background-color: rgb(102, 184, 162);
+  background: linear-gradient(
+    175deg,
+    rgba(245, 229, 247, 1) 0%,
+    rgba(233, 207, 238, 1) 36%,
+    rgba(201, 235, 242, 1) 86%
+  );
 }
 header {
   height: 4em;
   display: flex;
   justify-content: space-between;
   margin: 0 1em;
-  padding: 0 2em;
+  padding: 1em 2em;
   border: 2px solid white;
   border-radius: 0.9em;
   align-items: center;
+  font-size: 18px !important;
 }
-.header_title{
+.header_title {
   display: flex;
   align-items: start;
 }
@@ -30,43 +36,25 @@ header {
   display: flex;
   width: 20%;
 }
-.logo img {
-  width: 100px;
-}
-.logo h1 {
-  display: inline;
-  font-size: 1.5em;
-  position: relative;
-  bottom: 80%;
-}
+
 .settings {
+  width: 100%;
   display: flex;
   justify-content: space-around;
   align-items: center;
   gap: 0.5em;
-  /* width: 50%; */
 }
-#displayUserName p{
-  /* margin-right: 1em; */
-  font-size: 1em;
-  color: rgb(100, 24, 24);
-  text-decoration:underline;
-}
+
 #score {
   width: 7em;
-  margin: 0 0.1em;
-  font-size: 0.9em;
 }
-/* .life {
-  width: 10%;
-} */
 
-
-.life svg {
+#life svg {
   width: 20%;
   height: 60%;
   position: relative;
   left: 8%;
+  margin: 5px;
 }
 
 .hide {
@@ -111,9 +99,10 @@ header {
   overflow-y: auto;
   display: flex;
 }
+
 .modal__main {
   width: 50%;
-  background-color: rgb(255, 209, 255);
+  background-color: rgb(216, 162, 224) !important;
   position: relative;
   margin: auto;
   cursor: default;
@@ -122,29 +111,44 @@ header {
   background-color: transparent;
 }
 
-.modals{
+.modals {
   display: flex;
   flex-direction: column;
   align-items: center;
   font-size: 1em;
 }
 
-.modals button{
+.recordList li {
+}
+
+button {
   padding: 0.2em 1em;
+  margin: 10px;
   opacity: 0.7;
-  background-color: rgb(247, 198, 247);
+  background-color: rgb(252, 239, 252);
   cursor: pointer;
   border-radius: 0.3em;
 }
-.modals button:hover{
+.modals button:hover {
   opacity: 1;
   transition: 700ms;
 }
 
-#timer h2{
+#welcome h2 {
+  text-align: center;
+}
+#note {
+  font-size: 0.5em;
+}
+#timer h2 {
   font-size: 5em;
 }
-
+.gameOver {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
 .gameOver__close {
   background-color: transparent;
   border: 0;
@@ -157,10 +161,6 @@ header {
 }
 .gameOver__close:focus-visible {
   outline-color: gray;
-}
-
-.gameOver__title {
-  font-size: 3em;
 }
 
 /* @keyframes jump {
@@ -178,7 +178,7 @@ header {
 footer {
   position: absolute;
   bottom: 0;
-  left:0;
+  left: 0;
   font-size: 0.3em;
   background-image: url("../img/stones.png");
   background-repeat: repeat;
@@ -186,6 +186,3 @@ footer {
   height: 20em;
   width: 100vw;
 }
-
-
-
