@@ -1,22 +1,15 @@
 export class Player {
   constructor(element) {
-    if (!element) {
-      throw new Error("Player element must be provided");
-    }
-
     this.element = element;
     this.isJumping = false;
     this.isColliding = false;
     this.jumpHeight = 150;
-    this.jumpSpeed = 10;
+    this.jumpSpeed = 5;
     this.gravity = 5;
     this.doubleJumpAvailable = false;
     this.elementPosition = 0;
     this.jumpCount = 0;
     this.element.style.bottom = this.elementPosition + "px";
-    this.jumpIntervalID;
-    this.doubleJumpIntervalID;
-    this.gravityIntervalID;
   }
 
   stop() {
@@ -26,11 +19,11 @@ export class Player {
   jump(jumpSound) {
     if (!this.isColliding) {
       if (!this.isJumping) {
-        this.startJump();
         jumpSound();
+        return this.startJump();
       } else if (this.jumpCount === 1 && this.doubleJumpAvailable) {
-        this.doubleJump();
         jumpSound();
+        return this.doubleJump();
       }
     }
   }
@@ -42,12 +35,12 @@ export class Player {
     this.elementPosition = 0;
     this.element.style.bottom = this.elementPosition + "px";
 
-    this.jumpIntervalID = setInterval(() => {
+    let jumpIntervalID = setInterval(() => {
       if (this.elementPosition < this.jumpHeight) {
         this.elementPosition += this.jumpSpeed;
         this.element.style.bottom = this.elementPosition + "px";
       } else {
-        clearInterval(this.jumpIntervalID);
+        clearInterval(jumpIntervalID);
         this.applyGravity();
       }
     }, 10);
@@ -57,24 +50,24 @@ export class Player {
     this.doubleJumpAvailable = false;
     this.jumpCount = 2;
 
-    this.doubleJumpIntervalID = setInterval(() => {
+    let doubleJumpIntervalID = setInterval(() => {
       if (this.elementPosition < this.jumpHeight * 2) {
         this.elementPosition += this.jumpSpeed;
         this.element.style.bottom = this.elementPosition + "px";
       } else {
-        clearInterval(this.doubleJumpIntervalID);
+        clearInterval(doubleJumpIntervalID);
         this.applyGravity();
       }
     }, 10);
   }
 
   applyGravity() {
-    this.gravityIntervalID = setInterval(() => {
+    let gravityIntervalID = setInterval(() => {
       if (this.elementPosition > 0 && !this.isColliding) {
         this.elementPosition -= this.gravity;
         this.element.style.bottom = this.elementPosition + "px";
       } else {
-        clearInterval(this.gravityIntervalID);
+        clearInterval(gravityIntervalID);
         this.isJumping = false;
         this.doubleJumpAvailable = false;
       }
