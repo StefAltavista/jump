@@ -1,6 +1,7 @@
 Preview link: https://stefaltavista.github.io/jump/
 
-Jump Game
+Jump Forest Jump!
+
 Jump Game is a browser-based game inspired by the Google Chrome offline dinosaur game. The objective is to jump over obstacles and survive as long as possible to achieve the highest score.
 
 Special Features
