@@ -1,4 +1,4 @@
-const mute = `<svg height="50px" width="50px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+const MUTE_SVG = `<svg height="50px" width="50px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
 	 viewBox="0 0 496.159 496.159" xml:space="preserve">
 <path style="fill:#E04F5F;" d="M496.159,248.086c0-137.022-111.07-248.082-248.076-248.082C111.071,0.004,0,111.063,0,248.086
 	c0,137.001,111.07,248.07,248.083,248.07C385.089,496.155,496.159,385.086,496.159,248.086z"/>
@@ -14,7 +14,7 @@ const mute = `<svg height="50px" width="50px" version="1.1" id="Layer_1" xmlns="
 		c1.757,1.757,4.061,2.636,6.364,2.636c2.303,0,4.606-0.879,6.364-2.636c3.515-3.516,3.515-9.213,0-12.729L355.405,248.079z"/>
 </g>
 </svg>`;
-const unmute = `<svg height="50px" width="50px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
+const UNMUTE_SVG = `<svg height="50px" width="50px" version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" 
 	 viewBox="0 0 496.159 496.159" xml:space="preserve">
 <path style="fill:#008000;" d="M496.159,248.085c0-137.023-111.07-248.082-248.076-248.082C111.071,0.003,0,111.063,0,248.085
 	c0,137.001,111.07,248.07,248.083,248.07C385.089,496.155,496.159,385.086,496.159,248.085z"/>
@@ -31,7 +31,7 @@ const unmute = `<svg height="50px" width="50px" version="1.1" id="Layer_1" xmlns
 </svg>`;
 
 export class Sounds {
-  constructor(muteButton) {
+  constructor(MUTE_BUTTON) {
     this.sounds = {
       start: new Audio("./sounds/start.mp3"),
       jump: new Audio("./sounds/jump.mp3"),
@@ -39,7 +39,7 @@ export class Sounds {
       boss: new Audio("./sounds/boss.mp3"),
       gameover: new Audio("./sounds/gameover.mp3"),
     };
-    this.muteButton = muteButton;
+    this.MUTE_BUTTON = MUTE_BUTTON;
     this.isMuted = false;
     this.toggleMute();
   }
@@ -56,9 +56,9 @@ export class Sounds {
       this.sounds[sound].muted = this.isMuted;
     }
     if (this.isMuted) {
-      this.muteButton.innerHTML = mute;
+      this.MUTE_BUTTON.innerHTML = MUTE_SVG;
     } else {
-      this.muteButton.innerHTML = unmute;
+      this.MUTE_BUTTON.innerHTML = UNMUTE_SVG;
     }
   }
 }

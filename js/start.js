@@ -1,15 +1,13 @@
 import { createObstacle, createBoss } from "./obstacle.js";
 import { checkCollision } from "./collision.js";
-import { Player } from "./player.js";
-import { createModal } from "./modals.js";
+import { createPlayer } from "./player.js";
+import { timer } from "./timer.js";
 
 const gameField = document.getElementById("gameField");
 
 const startGame = function (sounds, gameStats) {
-  const playerElement = document.createElement("div");
-  playerElement.setAttribute("id", "player");
-  gameField.appendChild(playerElement);
-  const player = new Player(playerElement);
+  const player = createPlayer();
+
   document.addEventListener("keydown", (event) => {
     event.preventDefault();
     if (event.code === "Space") {
@@ -17,9 +15,9 @@ const startGame = function (sounds, gameStats) {
     }
   });
 
-  return new Promise((resolve) => {
+  return new Promise(async (resolve) => {
     let animationID;
-    let speed = 7000;
+    let acceleration = 7000;
     let startTime = 0;
     let lastObstacleTime = 0;
     let obstacles = [];
@@ -30,29 +28,6 @@ const startGame = function (sounds, gameStats) {
     let boss = false;
     let wobbleSpeed = 1;
 
-    const timerModal = createModal(
-      `<div id="timer" class="modals">
-    </div>`,
-      true,
-      false
-    );
-
-    let count = 3;
-    const timerElement = document.getElementById("timer");
-    const intervalID = setInterval(function () {
-      timerElement.innerHTML = `<h2> ${count} </h2>`;
-      if (count >= 0) {
-        count--;
-      } else {
-        timerElement.innerHTML = `<h2> GO! </h2>`;
-
-        sounds.play("start");
-        animationID = requestAnimationFrame(animation);
-        clearInterval(intervalID);
-        timerModal.remove();
-      }
-    }, 1000);
-
     const animation = function (timestamp) {
       if (!startTime) startTime = timestamp;
       let elapsedTime = timestamp - startTime;
@@ -60,14 +35,14 @@ const startGame = function (sounds, gameStats) {
       if (newObstacle && !boss) {
         lastObstacleTime = elapsedTime;
         if (obstacleNum % 2 == 0) {
-          speed = speed > 200 ? speed - 100 : speed;
+          acceleration = acceleration > 200 ? acceleration - 100 : acceleration;
           minSpawnRate = minSpawnRate == 0 ? 0 : minSpawnRate - 1;
         }
 
-        let bossNumber = Math.floor(speed / 500);
+        let bossNumber = Math.floor(acceleration / 500);
         if (obstacleNum > 0 && obstacleNum % bossNumber == 0) {
           obstacles[obstacleNum] = createBoss(gameField);
-          obstacles[obstacleNum].move(speed * 3);
+          obstacles[obstacleNum].move(acceleration * 3);
           obstacleNum++;
           boss = true;
           sounds.play("boss");
@@ -77,7 +52,7 @@ const startGame = function (sounds, gameStats) {
           }, 6000);
         } else {
           obstacles[obstacleNum] = createObstacle(gameField);
-          obstacles[obstacleNum].move(speed);
+          obstacles[obstacleNum].move(acceleration);
           obstacleNum++;
         }
       }
@@ -102,6 +77,9 @@ const startGame = function (sounds, gameStats) {
       obstacles.forEach((x) => x.changeWidth(wobbleSpeed));
       animationID = requestAnimationFrame(animation);
     };
+
+    await timer(sounds);
+    animationID = requestAnimationFrame(animation);
   });
 };
 

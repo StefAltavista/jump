@@ -1,13 +1,18 @@
 import { Sounds } from "./sounds.js";
 import { startGame } from "./start.js";
 import { User, current, signIn } from "./user.js";
-import { createModal } from "./modals.js";
-import { GameStats } from "./gameStats.js";
+import { GameStats, getAllScore } from "./gameStats.js";
+import {
+  createModal,
+  GameOverModal,
+  RestartModal,
+  SignInModal,
+  RecordModal,
+} from "./modals.js";
 
-const muteButton = document.getElementById("soundMute");
-
-const sounds = new Sounds(muteButton);
-muteButton.addEventListener("click", () => {
+const MUTE_BUTTON = document.getElementById("soundMute");
+const sounds = new Sounds(MUTE_BUTTON);
+MUTE_BUTTON.addEventListener("click", () => {
   sounds.toggleMute();
 });
 
@@ -31,6 +36,7 @@ if (user) {
     false
   );
 
+  const enterGame = document.getElementById("enterGame");
   const changeUser = document.getElementById("changeUser");
 
   changeUser.addEventListener("click", () => {
@@ -40,8 +46,6 @@ if (user) {
     changeUser.remove();
     location.reload();
   });
-
-  const enterGame = document.getElementById("enterGame");
 
   enterGame.addEventListener("click", async () => {
     welcomeModal.remove();
@@ -63,16 +67,7 @@ if (!user) {
   enterGame.addEventListener("click", async () => {
     welcomeModal.remove();
 
-    const signInModal = createModal(
-      `<div id="signInModal" class="modals modal_signIn">
-          <h3>Enter your Name</h3>
-          <input type="text" class="userDataInput" required/>
-          <p id="note">Only letters are allowed<br/>between 3 and 20 characters</p>
-          <button id="submitData">Start</button>
-        </div>`,
-      true,
-      false
-    );
+    const signInModal = SignInModal();
     const submitDataButton = document.getElementById("submitData");
     const userDataInput = document.querySelector(".userDataInput");
     user = await signIn(submitDataButton, userDataInput);
@@ -84,16 +79,9 @@ if (!user) {
 const game = async function () {
   const { obstacles, player } = await startGame(sounds, gameStats);
   if (gameStats.lifes > 0) {
-    const restartModal = createModal(
-      `<div class="modals noBackground">
-        <h2 class="gameOver__title">Life Left: ${gameStats.lifes}</h2>
-        <h3 class="gameOver__title">Current Score: ${gameStats.score}</h3>
-        <button id="restart">Retry</button>
-      </div>`,
-      true,
-      true
-    );
+    const restartModal = RestartModal(gameStats);
     const restartButton = document.getElementById("restart");
+
     restartButton.addEventListener("click", () => {
       player.element.remove();
       restartModal.remove();
@@ -104,27 +92,15 @@ const game = async function () {
       return game();
     });
   } else {
+    const gameOverModal = GameOverModal(user, gameStats);
+    const newGameButton = document.getElementById("newGame");
+    const changeUserButton = document.getElementById("changeUser");
+    const viewListButton = document.getElementById("viewList");
+
     if (user.checkNewRecord(gameStats.score)) {
-      console.log("new Record!");
       user.updateScoreRecord(gameStats.score);
       user.save(user);
     }
-    const gameOverModal = createModal(
-      `<div class="gameOver noBackground">
-        <h2 class="gameOver__title">GAME OVER</h2>
-        <p>Score: ${user.scoreRecord}</p>
-        ${
-          user.checkNewRecord(gameStats.score)
-            ? "<h3>You Made a new Record!</h3>"
-            : ``
-        }
-        <button id="newGame">New game</button><button id="changeUser">Change User</button><button id="viewList">Veiw Record List</button>
-      </div>`,
-      true,
-      true
-    );
-
-    const newGameButton = document.getElementById("newGame");
 
     newGameButton.addEventListener("click", async () => {
       gameStats.reset();
@@ -135,7 +111,6 @@ const game = async function () {
       player.element.remove();
       return game();
     });
-    const changeUserButton = document.getElementById("changeUser");
 
     changeUserButton.addEventListener("click", () => {
       localStorage.removeItem("current");
@@ -144,7 +119,6 @@ const game = async function () {
 
       location.reload();
     });
-    const viewListButton = document.getElementById("viewList");
 
     viewListButton.addEventListener("click", () => {
       gameOverModal.remove();
@@ -152,12 +126,7 @@ const game = async function () {
       const list = allUsers
         .map((x) => `<li><p>${x.name}: ${x.scoreRecord}</p></li>`)
         .join("");
-      const recordModal = createModal(
-        `<div class="recordsmodal modals"><h1>Jump Records</h1><div class="recordList"><ul>${list}</ul></div>
-    <button id="exit">Exit</button></div>`,
-        true,
-        false
-      );
+      const recordModal = RecordModal(list);
       const exitButton = document.getElementById("exit");
       exitButton.addEventListener("click", () => {
         recordModal.remove();
@@ -166,14 +135,3 @@ const game = async function () {
     });
   }
 };
-
-function getAllScore() {
-  let keys = Object.keys(localStorage);
-  keys = keys.filter((x) => x.includes("id"));
-  let allUsers = [];
-  for (let i = 0; i < keys.length; i++) {
-    allUsers[i] = JSON.parse(localStorage.getItem(keys[i]));
-  }
-  allUsers.sort((a, b) => b.scoreRecord - a.scoreRecord);
-  return allUsers;
-}

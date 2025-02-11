@@ -74,3 +74,10 @@ export class Player {
     }, 20);
   }
 }
+
+export function createPlayer() {
+  const playerElement = document.createElement("div");
+  playerElement.setAttribute("id", "player");
+  gameField.appendChild(playerElement);
+  return new Player(playerElement);
+}

@@ -35,3 +35,14 @@ export class GameStats {
     this.updateLifes(3);
   }
 }
+
+export function getAllScore() {
+  let keys = Object.keys(localStorage);
+  keys = keys.filter((x) => x.includes("id"));
+  let allUsers = [];
+  for (let i = 0; i < keys.length; i++) {
+    allUsers[i] = JSON.parse(localStorage.getItem(keys[i]));
+  }
+  allUsers.sort((a, b) => b.scoreRecord - a.scoreRecord);
+  return allUsers;
+}
