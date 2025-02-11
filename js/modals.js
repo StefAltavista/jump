@@ -58,7 +58,7 @@ const GameOverModal = (user, gameStats) =>
       <p>Score: ${user.scoreRecord}</p>
       ${
         user.checkNewRecord(gameStats.score)
-          ? "<h3>You enstablished a new personale Record!</h3>"
+          ? "<h3>New Personal Record!</h3>"
           : ``
       }
       <button id="newGame">New game</button><button id="changeUser">Change User</button><button id="viewList">Veiw Record List</button>
